@@ -43,6 +43,7 @@ router.all('/*', function (req, res, next) {
 // Import Controllers
 let userCtrl = require('../controllers/userController');
 let contractCtrl = require('../controllers/contractController');
+let donationCtrl = require('../controllers/donationController');
 
 // API routes
 
@@ -70,6 +71,15 @@ router.route('/contract')
     .get(passport.authenticate('jwt', { session: false }), contractCtrl.findContract)
     .post(passport.authenticate('jwt', { session: false }), contractCtrl.addContract)
     .put(passport.authenticate('jwt', { session: false }), contractCtrl.updateContractById);
+router.route('/contract/all')
+    .get(passport.authenticate('jwt', { session: false }), contractCtrl.findAllContracts);
+
+router.route('/donation')
+    .get(passport.authenticate('jwt', { session: false }), donationCtrl.findDonation)
+    .post(passport.authenticate('jwt', { session: false }), donationCtrl.addDonation)
+    .put(passport.authenticate('jwt', { session: false }), donationCtrl.updateDonationById);
+router.route('/donation/all')
+    .get(passport.authenticate('jwt', { session: false }), donationCtrl.findAllDonations);
 
 router.route('/resetPassword')
     .post(passwordHelper.forgotPassword);
